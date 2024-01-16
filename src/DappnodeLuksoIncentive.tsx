@@ -180,7 +180,7 @@ export function DappnodeLuksoIncentive({
 
       <DappnodeButton
         onClick={dappnodeDeposit}
-        isDisabled={deposits && isWhitelisted && !isClaimed && !isExpired}
+        isDisabled={!(deposits && isWhitelisted && !isClaimed && !isExpired)}
       >
         Dappnode deposit
       </DappnodeButton>
