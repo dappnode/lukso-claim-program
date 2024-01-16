@@ -84,7 +84,7 @@ export function DappnodeLuksoIncentive({
       console.log(`\tBalance: ${balance.toString()}`);
 
       const tx = await dappnodeDepositContract.claimIncentive(data, {
-        gasLimit: 1000000,
+        gasLimit: 1000000, // TODO: how to estimate the gas of the transasction
       });
 
       setReqStatus({
@@ -93,7 +93,7 @@ export function DappnodeLuksoIncentive({
       });
       setTxData(tx.data);
       await tx.wait();
-      setReqStatus({ status: "success", message: "Transaction mined!" });
+      setReqStatus({ status: "success", message: "Transaction mined!" }); // TODO: add tx hash or other relevant info
       console.log(`\tTx hash: ${tx.hash}`);
       toast({
         title: "Transaction mined!",
@@ -180,7 +180,9 @@ export function DappnodeLuksoIncentive({
 
       <DappnodeButton
         onClick={dappnodeDeposit}
-        isDisabled={!(deposits && isWhitelisted && !isClaimed && !isExpired)}
+        isDisabled={
+          !(deposits.length > 0 && isWhitelisted && !isClaimed && !isExpired)
+        }
       >
         Dappnode deposit
       </DappnodeButton>

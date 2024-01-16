@@ -40,7 +40,7 @@ function App() {
     window.ethereum.on("message", (message: ProviderMessage) => {
       console.log("event message", message);
     });
-    window.ethereum.on("event disconnect", (error: ProviderRpcError) => {
+    window.ethereum.on("disconnect", (error: ProviderRpcError) => {
       console.log("disconnect", error);
       setIsConnected(false);
     });
