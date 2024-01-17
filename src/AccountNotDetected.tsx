@@ -18,7 +18,7 @@ export function AccountNotDetected({
       bg="white"
       textAlign="center"
     >
-      <Heading as="h3" size="lg" color="teal.500" mb={4}>
+      <Heading as="h3" size="lg" color="#000" mb={4}>
         Account Not Detected
       </Heading>
       <Text fontSize="md" color="gray.600" mb={6}>
