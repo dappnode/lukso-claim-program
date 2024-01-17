@@ -17,12 +17,13 @@ export function DappnodeButton({
       size="lg"
       px="6"
       py="4"
-      fontSize="lg"
+      fontSize="md"
       borderRadius="md"
       boxShadow="md"
       _hover={{ bg: "#FF9EDE" }}
       onClick={onClick}
       isDisabled={isDisabled}
+      style={{ textTransform: "uppercase" }}
     >
       {children}
     </Button>
