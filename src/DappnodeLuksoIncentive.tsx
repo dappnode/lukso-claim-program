@@ -17,6 +17,8 @@ import {
   AlertIcon,
   Alert,
   Spinner,
+  Flex,
+  Button,
 } from "@chakra-ui/react";
 import { FileUpload } from "./FileUpload";
 import { DepositData, ReqStatus } from "./types";
@@ -84,7 +86,7 @@ export function DappnodeLuksoIncentive({
       console.log(`\tBalance: ${balance.toString()}`);
 
       const tx = await dappnodeDepositContract.claimIncentive(data, {
-        gasLimit: 1000000, // TODO: how to estimate the gas of the transasction
+        gasLimit: 1000000,
       });
 
       setReqStatus({
@@ -93,7 +95,7 @@ export function DappnodeLuksoIncentive({
       });
       setTxData(tx.data);
       await tx.wait();
-      setReqStatus({ status: "success", message: "Transaction mined!" }); // TODO: add tx hash or other relevant info
+      setReqStatus({ status: "success", message: "Transaction mined!" });
       console.log(`\tTx hash: ${tx.hash}`);
       toast({
         title: "Transaction mined!",
@@ -120,73 +122,81 @@ export function DappnodeLuksoIncentive({
   }
 
   return (
-    <Box
-      p={16}
-      bg={"#fff"}
-      shadow="sm"
-      borderWidth="1px"
-      flex="1"
-      borderRadius="md"
-      w="100%"
-      h="100%"
-      display="flex"
-      flexDirection="column"
-    >
-      <Center>
-        <Heading fontSize="xl" mb={2}>
-          Dappnode Lukso Incentive Program
-        </Heading>
-      </Center>
-
-      <VStack align="flex-start" mb={4} mt={4} flex="1">
-        <HStack spacing={2}>
-          <Text>Address:</Text>
-          <Badge variant="outline" colorScheme="green">
-            {account}
-          </Badge>
-        </HStack>
-        <HStack>
-          <Icon
-            as={isWhitelisted ? CheckIcon : CloseIcon}
-            color={isWhitelisted ? "green.500" : "red.500"}
-          />
-          <Text>Whitelisted: {isWhitelisted ? "Yes" : "No"}</Text>
-        </HStack>
-        <HStack>
-          <Icon
-            as={!isClaimed ? CheckIcon : CloseIcon}
-            color={!isClaimed ? "green.500" : "red.500"}
-          />
-          <Text>Claimed: {isClaimed ? "Yes" : "No"}</Text>
-        </HStack>
-        <HStack>
-          <Icon
-            as={!isExpired ? CheckIcon : CloseIcon}
-            color={!isExpired ? "green.500" : "red.500"}
-          />
-          <Text>Expired: {isExpired ? "Yes" : "No"}</Text>
-        </HStack>
-      </VStack>
-
-      <Box mb={4}>
-        <FileUpload deposits={deposits} setDeposits={setDeposits} />
-      </Box>
-
-      {deposits.length > 0 && (
-        <Alert status="success" mb={4}>
-          <AlertIcon />
-          Deposits file valid and ready to be sent!
-        </Alert>
+    <>
+      {reqStatus && reqStatus.status === "pending" && (
+        <Flex mt="20px" py="4" justifyContent="center" color="#000">
+          <Box display="flex" color={"#848484"}>
+            <Spinner size="md" color="#FE005B" />
+            <Text ml="2">Sending deposit transaction...</Text>
+          </Box>
+        </Flex>
       )}
-
-      <DappnodeButton
-        onClick={dappnodeDeposit}
-        isDisabled={
-          !(deposits.length > 0 && isWhitelisted && !isClaimed && !isExpired)
-        }
+      <Box
+        p={16}
+        bg={"#fff"}
+        shadow="sm"
+        borderWidth="1px"
+        flex="1"
+        borderRadius="md"
+        w="100%"
+        h="100%"
+        display="flex"
+        flexDirection="column"
       >
-        Dappnode deposit
-      </DappnodeButton>
-    </Box>
+        <Center>
+          <Heading fontSize="xl" mb={2}>
+            Dappnode Lukso Incentive Program
+          </Heading>
+        </Center>
+
+        <VStack align="flex-start" mb={4} mt={4} flex="1">
+          <HStack spacing={2}>
+            <Text>Address:</Text>
+            <Badge variant="outline" colorScheme="green">
+              {account}
+            </Badge>
+          </HStack>
+          <HStack>
+            <Icon
+              as={isWhitelisted ? CheckIcon : CloseIcon}
+              color={isWhitelisted ? "green.500" : "red.500"}
+            />
+            <Text>Whitelisted: {isWhitelisted ? "Yes" : "No"}</Text>
+          </HStack>
+          <HStack>
+            <Icon
+              as={!isClaimed ? CheckIcon : CloseIcon}
+              color={!isClaimed ? "green.500" : "red.500"}
+            />
+            <Text>Claimed: {isClaimed ? "Yes" : "No"}</Text>
+          </HStack>
+          <HStack>
+            <Icon
+              as={!isExpired ? CheckIcon : CloseIcon}
+              color={!isExpired ? "green.500" : "red.500"}
+            />
+            <Text>Expired: {isExpired ? "Yes" : "No"}</Text>
+          </HStack>
+        </VStack>
+
+        <Box mb={4}>
+          <FileUpload deposits={deposits} setDeposits={setDeposits} />
+        </Box>
+
+        {deposits.length > 0 && (
+          <Alert status="success" mb={4}>
+            <AlertIcon />
+            Deposits file valid and ready to be sent!
+          </Alert>
+        )}
+
+        <DappnodeButton
+          onClick={dappnodeDeposit}
+          isDisabled={deposits && isWhitelisted && !isClaimed && !isExpired}
+        >
+          Dappnode deposit
+        </DappnodeButton>
+      </Box>
+    </>
   );
 }
