@@ -192,9 +192,11 @@ export function DappnodeLuksoIncentive({
           )}
         </VStack>
 
-        <Box mb={4}>
-          <FileUpload deposits={deposits} setDeposits={setDeposits} />
-        </Box>
+        {isWhitelisted && !isExpired && !isClaimed && (
+          <Box mb={4}>
+            <FileUpload deposits={deposits} setDeposits={setDeposits} />
+          </Box>
+        )}
 
         {deposits.length > 0 && (
           <Alert status="success" mb={4}>
