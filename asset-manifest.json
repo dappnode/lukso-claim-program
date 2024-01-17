@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/lukso-claim-program/src/static/js/main.6cbcf7cc.js",
-    "static/js/787.3d2c36c1.chunk.js": "/lukso-claim-program/src/static/js/787.3d2c36c1.chunk.js",
-    "index.html": "/lukso-claim-program/src/index.html",
-    "main.6cbcf7cc.js.map": "/lukso-claim-program/src/static/js/main.6cbcf7cc.js.map",
-    "787.3d2c36c1.chunk.js.map": "/lukso-claim-program/src/static/js/787.3d2c36c1.chunk.js.map"
+    "main.js": "/static/js/main.8af650e2.js",
+    "static/js/787.3d2c36c1.chunk.js": "/static/js/787.3d2c36c1.chunk.js",
+    "index.html": "/index.html",
+    "main.8af650e2.js.map": "/static/js/main.8af650e2.js.map",
+    "787.3d2c36c1.chunk.js.map": "/static/js/787.3d2c36c1.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.6cbcf7cc.js"
+    "static/js/main.8af650e2.js"
   ]
 }
