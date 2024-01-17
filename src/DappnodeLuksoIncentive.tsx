@@ -121,15 +121,16 @@ export function DappnodeLuksoIncentive({
 
   return (
     <Box
-      p={5}
-      shadow="md"
+      p={16}
+      bg={"#fff"}
+      shadow="sm"
       borderWidth="1px"
       flex="1"
       borderRadius="md"
       w="100%"
-      h="100%" // or any specific height
-      display="flex" // make Box a flex container
-      flexDirection="column" // stack children vertically
+      h="100%"
+      display="flex"
+      flexDirection="column"
     >
       <Center>
         <Heading fontSize="xl" mb={2}>
