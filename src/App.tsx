@@ -89,7 +89,7 @@ function App() {
         height="100vh" // Full viewport height
         alignItems="center" // Vertical centering
         justifyContent="center" // Horizontal centering
-        bgImage="url('/dappnode-lukso.png')"
+        bgImage="./dappnode-lukso.png"
         bgSize="cover"
         bgPosition="center"
         bgRepeat="no-repeat"
