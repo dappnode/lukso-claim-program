@@ -163,20 +163,33 @@ export function DappnodeLuksoIncentive({
             />
             <Text>Whitelisted: {isWhitelisted ? "Yes" : "No"}</Text>
           </HStack>
-          <HStack>
-            <Icon
-              as={!isClaimed ? CheckIcon : CloseIcon}
-              color={!isClaimed ? "green.500" : "red.500"}
-            />
-            <Text>Claimed: {isClaimed ? "Yes" : "No"}</Text>
-          </HStack>
-          <HStack>
-            <Icon
-              as={!isExpired ? CheckIcon : CloseIcon}
-              color={!isExpired ? "green.500" : "red.500"}
-            />
-            <Text>Expired: {isExpired ? "Yes" : "No"}</Text>
-          </HStack>
+          {/* Additional condition for feedback when not whitelisted */}
+          {!isWhitelisted && (
+            <Text color="red.500">
+              This account is not whitelisted. Please make sure to use your
+              Dappnode address.
+            </Text>
+          )}
+
+          {/* Conditionally render Claimed and Expired sections */}
+          {isWhitelisted && (
+            <>
+              <HStack>
+                <Icon
+                  as={!isClaimed ? CheckIcon : CloseIcon}
+                  color={!isClaimed ? "green.500" : "red.500"}
+                />
+                <Text>Claimed: {isClaimed ? "Yes" : "No"}</Text>
+              </HStack>
+              <HStack>
+                <Icon
+                  as={!isExpired ? CheckIcon : CloseIcon}
+                  color={!isExpired ? "green.500" : "red.500"}
+                />
+                <Text>Expired: {isExpired ? "Yes" : "No"}</Text>
+              </HStack>
+            </>
+          )}
         </VStack>
 
         <Box mb={4}>
