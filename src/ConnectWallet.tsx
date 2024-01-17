@@ -1,6 +1,6 @@
 import React from "react";
 import { DappnodeButton } from "./DappnodeButton";
-import { Box, Button, useToast } from "@chakra-ui/react";
+import { Box, useToast } from "@chakra-ui/react";
 
 export function ConnectWallet({
   setIsConnected,

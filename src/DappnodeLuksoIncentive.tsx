@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ethers } from "ethers";
 import React, { useEffect, useState } from "react";
 import { Abi, Abi__factory } from "./types/contracts";
