@@ -18,7 +18,6 @@ import {
   Alert,
   Spinner,
   Flex,
-  Button,
 } from "@chakra-ui/react";
 import { FileUpload } from "./FileUpload";
 import { DepositData, ReqStatus } from "./types";
@@ -134,7 +133,7 @@ export function DappnodeLuksoIncentive({
       <Box
         p={16}
         bg={"#fff"}
-        shadow="sm"
+        shadow="md"
         borderWidth="1px"
         flex="1"
         borderRadius="md"
