@@ -1,6 +1,6 @@
 {
   "name": "lukso-claim-program",
-  "homepage": ".",
+  "homepage": "/lukso-claim-program",
   "version": "0.1.0",
   "private": true,
   "type": "module",
