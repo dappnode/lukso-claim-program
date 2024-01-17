@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { extendTheme, ChakraProvider, Box, Flex } from "@chakra-ui/react";
+import {
+  extendTheme,
+  ChakraProvider,
+  Box,
+  Flex,
+  Image,
+  Link,
+  Text,
+} from "@chakra-ui/react";
 import { SwitchNetwork } from "./SwitchNetwork";
 import { ConnectWallet } from "./ConnectWallet";
 import { luksoNetworkParams } from "./params";
@@ -86,6 +94,23 @@ function App() {
         bgPosition="center"
         bgRepeat="no-repeat"
       >
+        <Flex
+          flexDirection={"row"}
+          my={"30px"}
+          zIndex={"1"}
+          position="fixed"
+          top="0"
+        >
+          <Image src="./logo-dappnode.png" alt="Logo" w={"140px"} mb="10px" />
+
+          <Image
+            src="./LUKSO_Wordmark_Black.png"
+            alt="Logo"
+            w={"100px"}
+            mb="10px"
+            ml="20px"
+          />
+        </Flex>
         <Box>
           {!isConnected ? (
             <ConnectWallet setIsConnected={setIsConnected} />
@@ -100,6 +125,35 @@ function App() {
             />
           )}
         </Box>
+        {/* Footer Section */}
+        <Flex
+          position="fixed"
+          bottom="0"
+          width="100%"
+          py="4"
+          justifyContent="center"
+          color="#000"
+          zIndex={"1"}
+        >
+          <Box display="flex" color={"#848484"}>
+            <Link
+              href="https://dappnode.com/"
+              mx="4"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Text>Dappnode</Text>
+            </Link>
+            <Link
+              href="https://lukso.network/"
+              mx="4"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Text>Lukso</Text>
+            </Link>
+          </Box>
+        </Flex>
       </Flex>
     </ChakraProvider>
   );
