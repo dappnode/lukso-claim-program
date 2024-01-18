@@ -9,7 +9,7 @@ npm install
 ```
 
 ```bash
-npm dev
+npm run start
 ```
 
 Before pushing and deploying run:
