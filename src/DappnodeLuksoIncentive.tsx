@@ -148,7 +148,6 @@ export function DappnodeLuksoIncentive({
             Dappnode Lukso Incentive Program
           </Heading>
         </Center>
-
         <VStack align="flex-start" mb={4} mt={4} flex="1">
           <HStack spacing={2}>
             <Text>Address:</Text>
@@ -170,7 +169,6 @@ export function DappnodeLuksoIncentive({
               Dappnode address.
             </Text>
           )}
-
           {/* Conditionally render Claimed and Expired sections */}
           {isWhitelisted && (
             <>
@@ -207,7 +205,9 @@ export function DappnodeLuksoIncentive({
 
         <DappnodeButton
           onClick={dappnodeDeposit}
-          isDisabled={deposits && isWhitelisted && !isClaimed && !isExpired}
+          isDisabled={
+            deposits.length === 0 || !isWhitelisted || isClaimed || isExpired
+          }
         >
           Dappnode deposit
         </DappnodeButton>
