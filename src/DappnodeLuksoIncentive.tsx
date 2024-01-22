@@ -178,8 +178,8 @@ export function DappnodeLuksoIncentive({
             <>
               <HStack>
                 <Icon
-                  as={!isClaimed ? CheckIcon : CloseIcon}
-                  color={!isClaimed ? "green.500" : "red.500"}
+                  as={!isClaimed ? CloseIcon : CheckIcon}
+                  color={!isClaimed ? "red.500" : "green.500"}
                 />
                 <Text>Claimed: {isClaimed ? "Yes" : "No"}</Text>
               </HStack>
