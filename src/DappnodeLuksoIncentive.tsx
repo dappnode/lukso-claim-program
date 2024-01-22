@@ -78,13 +78,14 @@ export function DappnodeLuksoIncentive({
         data += deposit.deposit_data_root;
       });
 
-      const balance = await browserProvider.getBalance(account);
-      const gasPrice = await browserProvider.estimateGas({ data, chainId: 42 });
+      //const balance = await browserProvider.getBalance(account);
+      //const gasPrice = await browserProvider.estimateGas({ data, chainId: 42 });
 
       // print gas prince and balance
-      console.log(`\tGas price: ${gasPrice.toString()}`);
-      console.log(`\tBalance: ${balance.toString()}`);
+      //console.log(`\tGas price: ${gasPrice.toString()}`);
+      //console.log(`\tBalance: ${balance.toString()}`);
 
+      // TODO: check if gas price is enough
       const tx = await dappnodeDepositContract.claimIncentive(data, {
         gasLimit: 1000000,
       });

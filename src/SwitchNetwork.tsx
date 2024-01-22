@@ -34,6 +34,7 @@ export function SwitchNetwork({
                 chainId: luksoNetworkParams.chainIdHex,
                 chainName: luksoNetworkParams.name,
                 rpcUrls: [luksoNetworkParams.rpcUrl],
+                nativeCurrency: luksoNetworkParams.nativeCurrency,
               },
             ],
           });
