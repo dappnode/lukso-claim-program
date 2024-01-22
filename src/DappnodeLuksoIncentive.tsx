@@ -85,9 +85,12 @@ export function DappnodeLuksoIncentive({
       //console.log(`\tGas price: ${gasPrice.toString()}`);
       //console.log(`\tBalance: ${balance.toString()}`);
 
+      // estimate gas limit using ethers
+      const gasLimit = await browserProvider.estimateGas({ data, chainId: 42 });
+
       // TODO: check if gas price is enough
       const tx = await dappnodeDepositContract.claimIncentive(data, {
-        gasLimit: 1000000,
+        gasLimit,
       });
 
       setReqStatus({
