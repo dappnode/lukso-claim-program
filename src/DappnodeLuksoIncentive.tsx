@@ -61,10 +61,8 @@ export function DappnodeLuksoIncentive({
       console.log(
         `Sending deposit transaction for ${deposits.length} deposits`
       );
-      // DAppNode incentive deposit contract:
-      // Must be called with the same tx data as the deposit contract
-      const signer = await browserProvider.getSigner();
 
+      const signer = await browserProvider.getSigner();
       const dappnodeDepositContract: Abi = Abi__factory.connect(
         address,
         signer
@@ -78,17 +76,8 @@ export function DappnodeLuksoIncentive({
         data += deposit.deposit_data_root;
       });
 
-      //const balance = await browserProvider.getBalance(account);
-      //const gasPrice = await browserProvider.estimateGas({ data, chainId: 42 });
+      const gasLimit = 100000;
 
-      // print gas prince and balance
-      //console.log(`\tGas price: ${gasPrice.toString()}`);
-      //console.log(`\tBalance: ${balance.toString()}`);
-
-      // estimate gas limit using ethers
-      const gasLimit = await browserProvider.estimateGas({ data, chainId: 42 });
-
-      // TODO: check if gas price is enough
       const tx = await dappnodeDepositContract.claimIncentive(data, {
         gasLimit,
       });
