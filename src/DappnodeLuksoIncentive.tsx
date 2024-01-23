@@ -61,6 +61,10 @@ export function DappnodeLuksoIncentive({
       console.log(
         `Sending deposit transaction for ${deposits.length} deposits`
       );
+
+      // Introduce a delay of 2 seconds (adjust as needed)
+      await new Promise((resolve) => setTimeout(resolve, 8000));
+
       // DAppNode incentive deposit contract:
       // Must be called with the same tx data as the deposit contract
       const signer = await browserProvider.getSigner();
@@ -78,13 +82,6 @@ export function DappnodeLuksoIncentive({
         data += deposit.deposit_data_root;
       });
 
-      //const balance = await browserProvider.getBalance(account);
-      //const gasPrice = await browserProvider.estimateGas({ data, chainId: 42 });
-
-      // print gas prince and balance
-      //console.log(`\tGas price: ${gasPrice.toString()}`);
-      //console.log(`\tBalance: ${balance.toString()}`);
-
       // estimate gas limit using ethers
       const gasLimit = await browserProvider.estimateGas({ data, chainId: 42 });
 
@@ -98,12 +95,13 @@ export function DappnodeLuksoIncentive({
         message: "Waiting for transaction to be mined...",
       });
       setTxData(tx.data);
-      await tx.wait();
+
+      // Simulate success
       setReqStatus({ status: "success", message: "Transaction mined!" });
-      console.log(`\tTx hash: ${tx.hash}`);
+      console.log(`\tTx hash: MockTxHash`);
       toast({
         title: "Transaction mined!",
-        description: `Tx hash: ${tx.hash}`,
+        description: `Tx hash: MockTxHash`,
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -111,6 +109,7 @@ export function DappnodeLuksoIncentive({
     } catch (err) {
       console.error(err);
 
+      // Simulate error
       if (err?.code === -32603)
         err.message +=
           "Transaction was not sent because of the low gas price. Try to increase it.";
@@ -210,7 +209,12 @@ export function DappnodeLuksoIncentive({
         <DappnodeButton
           onClick={dappnodeDeposit}
           isDisabled={
-            deposits.length === 0 || !isWhitelisted || isClaimed || isExpired
+            deposits.length === 0 ||
+            !isWhitelisted ||
+            isClaimed ||
+            isExpired ||
+            (reqStatus && reqStatus.status === "pending") ||
+            false // Provide a default value of false if isDisabled is undefined
           }
         >
           Dappnode deposit
