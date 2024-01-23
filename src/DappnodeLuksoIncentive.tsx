@@ -61,10 +61,6 @@ export function DappnodeLuksoIncentive({
       console.log(
         `Sending deposit transaction for ${deposits.length} deposits`
       );
-
-      // Introduce a delay of 2 seconds (adjust as needed)
-      await new Promise((resolve) => setTimeout(resolve, 8000));
-
       // DAppNode incentive deposit contract:
       // Must be called with the same tx data as the deposit contract
       const signer = await browserProvider.getSigner();
@@ -82,6 +78,13 @@ export function DappnodeLuksoIncentive({
         data += deposit.deposit_data_root;
       });
 
+      //const balance = await browserProvider.getBalance(account);
+      //const gasPrice = await browserProvider.estimateGas({ data, chainId: 42 });
+
+      // print gas prince and balance
+      //console.log(`\tGas price: ${gasPrice.toString()}`);
+      //console.log(`\tBalance: ${balance.toString()}`);
+
       // estimate gas limit using ethers
       const gasLimit = await browserProvider.estimateGas({ data, chainId: 42 });
 
@@ -95,13 +98,12 @@ export function DappnodeLuksoIncentive({
         message: "Waiting for transaction to be mined...",
       });
       setTxData(tx.data);
-
-      // Simulate success
+      await tx.wait();
       setReqStatus({ status: "success", message: "Transaction mined!" });
-      console.log(`\tTx hash: MockTxHash`);
+      console.log(`\tTx hash: ${tx.hash}`);
       toast({
         title: "Transaction mined!",
-        description: `Tx hash: MockTxHash`,
+        description: `Tx hash: ${tx.hash}`,
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -109,7 +111,6 @@ export function DappnodeLuksoIncentive({
     } catch (err) {
       console.error(err);
 
-      // Simulate error
       if (err?.code === -32603)
         err.message +=
           "Transaction was not sent because of the low gas price. Try to increase it.";
