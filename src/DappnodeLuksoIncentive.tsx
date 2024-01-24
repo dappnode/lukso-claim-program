@@ -76,7 +76,7 @@ export function DappnodeLuksoIncentive({
         data += deposit.deposit_data_root;
       });
 
-      const gasLimit = 100000;
+      const gasLimit = 500000;
 
       const tx = await dappnodeDepositContract.claimIncentive(data, {
         gasLimit,
