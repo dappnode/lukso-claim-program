@@ -60,9 +60,6 @@ export function DappnodeLuksoIncentive({
         status: "pending",
         message: `Sending deposit transaction for ${deposits.length} deposits`,
       });
-      console.log(
-        `Sending deposit transaction for ${deposits.length} deposits`
-      );
 
       const signer = await browserProvider.getSigner();
       const dappnodeDepositContract = Abi__factory.connect(address, signer);
@@ -77,15 +74,12 @@ export function DappnodeLuksoIncentive({
 
       const provider = signer.provider;
       const gasPrice = await provider.send("eth_gasPrice", []);
-      console.log(`Current Gas Price: ${gasPrice}`);
 
       const estimate = await dappnodeDepositContract.claimIncentive.estimateGas(
         data
       );
-      console.log(`Estimated Gas: ${estimate}`);
 
       const gasLimit = estimate + 50000n; // Add some buffer gas
-      console.log(`Setting Gas Limit: ${gasLimit}`);
 
       const tx = await dappnodeDepositContract.claimIncentive(data, {
         gasLimit,
@@ -99,7 +93,6 @@ export function DappnodeLuksoIncentive({
       setTxData(tx.data);
       await tx.wait();
       setReqStatus({ status: "success", message: "Transaction mined!" });
-      console.log(`Tx mined - Hash: ${tx.hash}`);
       toast({
         title: "Transaction mined!",
         description: `Tx hash: ${tx.hash}`,
@@ -111,7 +104,6 @@ export function DappnodeLuksoIncentive({
       console.error(err);
 
       if (err?.code === -32603) {
-        // Customize the error message for better user understanding
         const errorMessage =
           "Transaction was not sent due to low gas price. Please try increasing the gas price.";
 
@@ -125,9 +117,6 @@ export function DappnodeLuksoIncentive({
           isClosable: true,
         });
       } else {
-        // Handle other types of errors as needed
-        console.error("Unexpected error:", err);
-
         const errorMessage = "An unexpected error occurred. Please try again.";
 
         setReqStatus({ status: "error", message: errorMessage });
