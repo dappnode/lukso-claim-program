@@ -19,6 +19,8 @@ import {
   Alert,
   Spinner,
   Flex,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
 import { FileUpload } from "./FileUpload";
 import { DepositData, ReqStatus } from "./types";
@@ -58,15 +60,9 @@ export function DappnodeLuksoIncentive({
         status: "pending",
         message: `Sending deposit transaction for ${deposits.length} deposits`,
       });
-      console.log(
-        `Sending deposit transaction for ${deposits.length} deposits`
-      );
 
       const signer = await browserProvider.getSigner();
-      const dappnodeDepositContract: Abi = Abi__factory.connect(
-        address,
-        signer
-      );
+      const dappnodeDepositContract = Abi__factory.connect(address, signer);
 
       let data = "0x";
       data += deposits[0].withdrawal_credentials;
@@ -76,10 +72,18 @@ export function DappnodeLuksoIncentive({
         data += deposit.deposit_data_root;
       });
 
-      const gasLimit = 500000;
+      const provider = signer.provider;
+      const gasPrice = await provider.send("eth_gasPrice", []);
+
+      const estimate = await dappnodeDepositContract.claimIncentive.estimateGas(
+        data
+      );
+
+      const gasLimit = estimate + 50000n; // Add some buffer gas
 
       const tx = await dappnodeDepositContract.claimIncentive(data, {
         gasLimit,
+        gasPrice,
       });
 
       setReqStatus({
@@ -89,7 +93,6 @@ export function DappnodeLuksoIncentive({
       setTxData(tx.data);
       await tx.wait();
       setReqStatus({ status: "success", message: "Transaction mined!" });
-      console.log(`\tTx hash: ${tx.hash}`);
       toast({
         title: "Transaction mined!",
         description: `Tx hash: ${tx.hash}`,
@@ -100,17 +103,32 @@ export function DappnodeLuksoIncentive({
     } catch (err) {
       console.error(err);
 
-      if (err?.code === -32603)
-        err.message +=
-          "Transaction was not sent because of the low gas price. Try to increase it.";
-      setReqStatus({ status: "error", message: err });
-      toast({
-        title: "Error",
-        description: err.message,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
+      if (err?.code === -32603) {
+        const errorMessage =
+          "Transaction was not sent due to low gas price. Please try increasing the gas price.";
+
+        setReqStatus({ status: "error", message: errorMessage });
+
+        toast({
+          title: "Error",
+          description: errorMessage,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else {
+        const errorMessage = "An unexpected error occurred. Please try again.";
+
+        setReqStatus({ status: "error", message: errorMessage });
+
+        toast({
+          title: "Error",
+          description: errorMessage,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     }
   }
 
